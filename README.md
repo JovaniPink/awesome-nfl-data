@@ -158,6 +158,6 @@ python3 scripts/validate_readme.py README.md
 
 GitHub Actions runs the same checks on Python 3.11 and the current Python 3.14 line for every pull
 request and push to `main`. The validator checks the Contents order and anchors, required files,
-relative links, HTTPS resource URLs, and entry formatting. A passing result does not prove that
-external URLs respond, that a source is still maintained, or that its access and licensing terms are
-unchanged; those require human review.
+relative links, unique HTTPS resource URLs, and entry formatting. A passing result does not prove
+that external URLs respond, that a source is still maintained, or that its access and licensing
+terms are unchanged; those require human review.

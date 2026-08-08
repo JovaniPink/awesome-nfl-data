@@ -14,6 +14,7 @@ EXCLUDED_CONTENTS_SECTIONS = {"Contribute", "Contributing", "Footnotes"}
 HEADING_RE = re.compile(r"^(#{1,6})\s+(.+?)\s*$", re.MULTILINE)
 CONTENTS_ENTRY_RE = re.compile(r"^- \[([^]]+)]\(#([^)]+)\)$")
 MARKDOWN_LINK_RE = re.compile(r"(?<!!)\[([^]]+)]\(([^)]+)\)")
+RESOURCE_BULLET_RE = re.compile(r"^\s*- \[[^]]+]\(https?://")
 RESOURCE_ENTRY_RE = re.compile(
     r"^\s*- \[([^]]+)]\((https?://[^)]+)\)(?:\s+-\s+(.+))?$"
 )
@@ -97,15 +98,28 @@ def validate_document(text: str, repository_root: Path) -> ValidationResult:
             )
 
     resource_count = 0
+    seen_urls: dict[str, int] = {}
     for line_number, line in enumerate(lines, start=1):
         match = RESOURCE_ENTRY_RE.fullmatch(line)
         if not match:
+            if RESOURCE_BULLET_RE.match(line):
+                errors.append(
+                    f"line {line_number}: resource entry must match "
+                    "'- [Name](URL) - Description.'"
+                )
             continue
         resource_count += 1
         url = match.group(2)
         description = match.group(3)
         if not url.startswith("https://"):
             errors.append(f"line {line_number}: resource URL must use HTTPS: {url}")
+        if url in seen_urls:
+            errors.append(
+                f"line {line_number}: duplicate resource URL first used on line {seen_urls[url]}: "
+                f"{url}"
+            )
+        else:
+            seen_urls[url] = line_number
         if not description:
             errors.append(f"line {line_number}: resource entry must include a description")
             continue
