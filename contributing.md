@@ -23,6 +23,19 @@ A listed resource should be at least one of the following:
 
 Descriptions should distinguish observed data, human classifications, model outputs, evaluations, forecasts, and market data where relevant.
 
+## Validate your change
+
+The catalog gate requires Python 3.11 or newer and has no third-party dependencies:
+
+```sh
+python3 -m unittest discover -s tests -v
+python3 scripts/validate_readme.py README.md
+```
+
+The validator checks structure and formatting only. Before adding or materially updating a resource,
+open its canonical source and verify its current maintenance status, access level, relevant license
+or terms, and the specific claim made by the description. Include that evidence in the pull request.
+
 ## Updating your pull request
 
 If maintainers request changes, update the existing pull request rather than opening a replacement. If you are unsure how, see this [guide to amending a commit](https://github.com/RichardLitt/knowledge/blob/master/github/amending-a-commit-guide.md).
