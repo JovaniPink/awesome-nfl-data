@@ -65,6 +65,23 @@ class DocumentValidationTests(unittest.TestCase):
         self.assertTrue(any("start uppercase" in error for error in result.errors))
         self.assertTrue(any("end with a period" in error for error in result.errors))
 
+    def test_reports_malformed_and_duplicate_resources(self) -> None:
+        invalid = VALID_README.replace(
+            "- [Example](https://example.com/) - Example primary source.",
+            "\n".join(
+                (
+                    "- [Example](https://example.com/) - Example primary source.",
+                    "- [Duplicate](https://example.com/) - Duplicate canonical URL.",
+                    "- [Malformed](https://malformed.example/) Description without separator.",
+                )
+            ),
+        )
+
+        result = validate_document(invalid, self.root)
+
+        self.assertTrue(any("duplicate resource URL" in error for error in result.errors))
+        self.assertTrue(any("resource entry must match" in error for error in result.errors))
+
     def test_reports_missing_relative_links(self) -> None:
         invalid = VALID_README + "\n[Missing](docs/missing.md)\n"
 

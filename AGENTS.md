@@ -21,15 +21,17 @@ The validation code uses only the Python standard library and supports Python 3.
 - Use HTTPS resource URLs.
 - Format catalog entries as `- [Name](URL) - Description.` with an uppercase description and a
   terminal period.
+- List each canonical resource URL once, in its strongest category.
 - Preserve canonical source URLs and accurately label paid, archived, unofficial, model-generated,
   and license-restricted resources.
 - Update `Last reviewed` only after a human has actually rechecked the catalog.
 
 ## Evidence boundary
 
-A passing validator proves local Markdown structure, anchors, relative links, and entry formatting.
-It does not prove that an external URL responds, that its content remains high quality, or that its
-license and access terms are unchanged. Those claims require source-by-source review.
+A passing validator proves local Markdown structure, anchors, relative links, URL uniqueness, and
+entry formatting. It does not prove that an external URL responds, that its content remains high
+quality, or that its license and access terms are unchanged. Those claims require source-by-source
+review.
 
 ## Working rules
 
