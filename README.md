@@ -17,7 +17,6 @@ Last reviewed: August 2026.
 - [Metrics & Methods](#metrics--methods)
 - [Legacy / Archived](#legacy--archived)
 - [Choosing a Data Stack](#choosing-a-data-stack)
-- [Contribute](#contribute)
 
 ---
 
@@ -69,17 +68,15 @@ These sources add models, human classifications, grades, or tracking-derived fie
 
 - [Over the Cap](https://overthecap.com/) - NFL-specific contracts, guarantees, cap space, dead money, restructures, valuations, and future obligations.
 - [Spotrac NFL](https://www.spotrac.com/nfl/) - Contract and multi-year cap tables that are useful for cross-checking reported terms and comparing positions.
-- [NFL Injury Reports](https://www.nfl.com/injuries/) - Authoritative weekly practice and game-status labels such as questionable, doubtful, and out.
-- [NFL Transactions](https://www.nfl.com/transactions/) - Authoritative league transaction wire.
 
-Contract details often arrive incrementally. Preserve the source and an `as_of` timestamp, and reconcile reported terms rather than silently replacing one vendor's representation with another.
+Use the official injury and transaction sources listed above for weekly designations and roster
+moves. Contract details often arrive incrementally. Preserve the source and an `as_of` timestamp,
+and reconcile reported terms rather than silently replacing one vendor's representation with
+another.
 
 ## Data Analysis Libraries & Tools
 
-- [nflreadpy](https://nflreadpy.nflverse.com/) - Python access to nflverse releases using Polars.
-- [nflreadr](https://nflreadr.nflverse.com/) - R access to nflverse datasets and dictionaries.
-- [nflfastR](https://www.nflfastr.com/) - Play-by-play cleaning, expected-points, win-probability, and conversion utilities in R.
-- [nflplotR](https://nflplotr.nflverse.com/) - ggplot2 helpers for NFL team logos, player headshots, wordmarks, and field visualizations.
+- [nflplotR](https://nflplotr.nflverse.com/) - Helpers for using NFL team logos, player headshots, wordmarks, and field visualizations with ggplot2.
 - [nfl4th](https://www.nfl4th.com/) - Fourth-down decision modeling and analysis in R.
 - [Polars](https://pola.rs/) - Fast DataFrame engine used by nflreadpy.
 - [DuckDB](https://duckdb.org/) - Embedded analytical database well suited to querying Parquet and joining NFL datasets locally.
@@ -104,7 +101,6 @@ Low-temperature shows where arguments are usually grounded in film, personnel, d
 - [The Athletic Football Show](https://podcasts.apple.com/us/podcast/the-athletic-football-show-a-show-about-the-nfl/id1528622068) - Best all-around mix of league-wide scheme, coaching, roster construction, and player evaluation.
 - [The Mina Kimes Show featuring Lenny](https://www.espn.com/espnradio/podcast/archive/_/id/2544457) - Accessible weekly analysis of every team's strengths, weaknesses, personnel, and schematic direction.
 - [Check the Mic](https://podcasts.apple.com/us/podcast/check-the-mic-with-steve-palazzolo-sam-monson/id1761398472) - High-volume game review, player performance, analytics, and team-building discussion from Steve Palazzolo and Sam Monson.
-- [Bootleg Football](https://www.youtube.com/@BootlegFootball) - Long-form scouting and scheme reports covering full rosters, divisions, draft classes, and coaching systems.
 - [The Bill Barnwell Show](https://www.espn.com/espnradio/podcast/archive/_/id/11046849) - Transactions, contracts, coaching decisions, team-building logic, and analytical skepticism.
 - [NFL Daily](https://www.nfl.com/podcasts/nfl-daily) - Frequent league-news layer hosted by Gregg Rosenthal with rotating reporters and analysts; depth varies by episode.
 - [Move the Sticks](https://www.nfl.com/podcasts/move-the-sticks) - Former scouts Daniel Jeremiah and Bucky Brooks on evaluation, traits, roster construction, and the draft.
@@ -114,7 +110,6 @@ Low-temperature shows where arguments are usually grounded in film, personnel, d
 
 - [nflfastR Models](https://opensourcefootball.com/posts/2020-09-28-nflfastr-ep-wp-and-cp-models/) - Documentation for expected points, win probability, completion probability, expected yards after catch, and expected-pass models.
 - [nflverse Play-by-Play Dictionary](https://nflreadr.nflverse.com/articles/dictionary_pbp.html) - Field definitions for nflverse play-by-play data; consult this before interpreting model columns.
-- [Next Gen Stats](https://nextgenstats.nfl.com/) - Public metric dashboards and definitions for selected tracking-derived measures.
 - [FTN DVOA](https://ftnfantasy.com/dvoa) - Opponent- and situation-adjusted team efficiency rankings and articles; full data access may require a subscription.
 - [Pro Football Reference Glossary](https://www.pro-football-reference.com/about/glossary.htm) - Definitions for conventional and advanced fields used throughout the site.
 
@@ -127,27 +122,42 @@ Useful for reproducibility and historical work, but not recommended as the defau
 
 ## Choosing a Data Stack
 
-| Goal | Start with | Add when needed |
-| --- | --- | --- |
-| Personal analysis or modeling | nflverse + nflreadpy/nflreadr | DuckDB, FTN charting, Pro Football Reference |
-| Scheme and film research | The QB School + Thinking Football | MatchQuarters, FTN, SūmerSports |
-| Historical fact-checking | Pro Football Reference | Stathead, Pro Football Archives |
-| Contracts and cap analysis | Over the Cap | Spotrac cross-checks and source timestamps |
-| Player-tracking research | Big Data Bowl releases | Public Next Gen Stats derived metrics |
-| Production scores or live products | Licensed Sportradar or SportsDataIO feed | nflverse historical enrichment and specialist charting |
+| Goal                               | Start with                                  | Add when needed                                        |
+| ---------------------------------- | ------------------------------------------- | ------------------------------------------------------ |
+| Personal analysis or modeling      | nflverse + nflreadpy/nflreadr               | DuckDB, FTN charting, Pro Football Reference           |
+| Scheme and film research           | The QB School + Thinking Football           | MatchQuarters, FTN, SūmerSports                        |
+| Historical fact-checking           | Pro Football Reference                      | Stathead, Pro Football Archives                        |
+| Contracts and cap analysis         | Over the Cap                                | Spotrac cross-checks and source timestamps             |
+| Player-tracking research           | Big Data Bowl releases                      | Public Next Gen Stats derived metrics                  |
+| Production scores or live products | Licensed Sportradar or SportsDataIO feed    | nflverse historical enrichment and specialist charting |
 
 Keep these categories distinct in a data model:
 
-- **Observed facts:** down, distance, participants, result, and recorded position.
-- **Human classifications:** route, coverage, assignment, and pressure source.
-- **Model outputs:** EPA, win probability, completion probability, and projections.
-- **Evaluations:** player grades and scouting judgments.
-- **Market signals:** odds, lines, and contract reporting.
+| Data layer            | Examples                                                 |
+| --------------------- | -------------------------------------------------------- |
+| Observed facts        | Down, distance, participants, result, and position.      |
+| Human classifications | Routes, coverages, assignments, and pressure sources.    |
+| Model outputs         | EPA, win probability, completion probability, forecasts. |
+| Evaluations           | Player grades and scouting judgments.                    |
+| Market signals        | Odds, lines, and contract reporting.                     |
 
 Retain provenance, metric definitions, licensing, uncertainty, and `as_of` timestamps when combining sources.
 
 ---
 
-## Contribute
+## Contributing
 
 Spotted a dead link, a better official source, or a high-signal resource? Pull requests are welcome. Keep additions current, specific, and non-promotional; see [contributing.md](contributing.md).
+
+Before opening a pull request, run the dependency-free catalog gate with Python 3.11 or newer:
+
+```sh
+python3 -m unittest discover -s tests -v
+python3 scripts/validate_readme.py README.md
+```
+
+GitHub Actions runs the same checks on Python 3.11 and the current Python 3.14 line for every pull
+request and push to `main`. The validator checks the Contents order and anchors, required files,
+relative links, HTTPS resource URLs, and entry formatting. A passing result does not prove that
+external URLs respond, that a source is still maintained, or that its access and licensing terms are
+unchanged; those require human review.
