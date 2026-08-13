@@ -38,7 +38,9 @@ League-operated sources. Use these first for official schedules, statistics, des
 Programmatic and bulk access for research. Check dataset-specific licenses, update schedules, rate limits, and commercial-use terms before redistributing data.
 
 - [nflverse](https://nflverse.nflverse.com/) - The open-source NFL analytics ecosystem and the best starting point for public play-by-play, rosters, schedules, player stats, and related datasets.
-- [nflverse-data](https://github.com/nflverse/nflverse-data) - Automated data releases and machine-readable files behind much of the nflverse ecosystem.
+- [nflverse-data](https://github.com/nflverse/nflverse-data) - Current automated releases and machine-readable files behind much of the nflverse ecosystem; retain retrieval timestamps and hashes because a release URL alone is not immutable artifact identity.
+- [nfldata](https://github.com/nflverse/nfldata) - Schedules, game results, team metadata, and consolidated historical betting lines; treat its market fields as closing proxies rather than authenticated sportsbook snapshots.
+- [nflverse Data Update and Availability Schedule](https://nflreadr.nflverse.com/articles/nflverse_data_schedule.html) - Official refresh cadence, correction timing, automation status, source changes, and known availability gaps for nflverse datasets.
 - [nflreadpy](https://nflreadpy.nflverse.com/) - Current Python loader for nflverse data. Returns Polars DataFrames and supports caching; preferred over the deprecated `nfl_data_py` package.
 - [nflreadr](https://nflreadr.nflverse.com/) - R package for downloading play-by-play and the broader nflverse dataset catalog, with data dictionaries and update-status documentation.
 - [nflfastR](https://www.nflfastr.com/) - R package and methodology hub for cleaning play-by-play and computing expected points and win probability fields used across nflverse.
@@ -117,6 +119,8 @@ Low-temperature shows where arguments are usually grounded in film, personnel, d
 
 Useful for reproducibility and historical work, but not recommended as the default for a new project.
 
+- [nflverse-data-archives](https://github.com/nflverse/nflverse-data-archives) - Point-in-time and legacy nflverse release files for reproducibility and as-of research; archive snapshots overlap heavily and must not be concatenated as independent training observations.
+- [FiveThirtyEight NFL Elo](https://github.com/fivethirtyeight/nfl-elo-game) - Static MIT-licensed scores, Elo probabilities, model code, and reader forecasts for historical forecast evaluation; useful as a benchmark rather than a current production feed.
 - [nfl_data_py](https://github.com/cooperdff/nfl_data_py) - Deprecated Python package retained for older notebooks; new work should use nflreadpy.
 - [Advanced Football Analytics](https://www.advancedfootballanalytics.com/) - Archived essays and early public NFL EPA/WPA work.
 
@@ -142,6 +146,14 @@ Keep these categories distinct in a data model:
 | Market signals        | Odds, lines, and contract reporting.                     |
 
 Retain provenance, metric definitions, licensing, uncertainty, and `as_of` timestamps when combining sources.
+
+An archived release represents what a source published at a particular time, not an additional
+football observation. Preserve revisions for correction and leakage research, but select one
+declared as-of version when constructing a training or evaluation dataset.
+
+The nflverse data repository is CC-BY-4.0, but individual derived datasets and upstream sources can
+carry distinct attribution or usage terms. In particular, preserve the attribution and license
+attached to FTN-derived data rather than assuming the repository-level license supersedes it.
 
 ---
 
