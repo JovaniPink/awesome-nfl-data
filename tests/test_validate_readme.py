@@ -3,6 +3,7 @@ from __future__ import annotations
 import tempfile
 import unittest
 from pathlib import Path
+from typing import Final
 
 from scripts.validate_readme import github_anchor, validate_document
 
@@ -26,10 +27,23 @@ Last reviewed: August 2026.
 See the contribution guide.
 """
 
+PUBLISHABLE_TEXT_FILES: Final[tuple[str, ...]] = (
+    ".github/workflows/validate.yml",
+    "AGENTS.md",
+    "LICENSE",
+    "README.md",
+    "code-of-conduct.md",
+    "contributing.md",
+    "scripts/validate_readme.py",
+    "tests/test_validate_readme.py",
+)
+
 
 class GithubAnchorTests(unittest.TestCase):
     def test_matches_github_heading_style(self) -> None:
-        self.assertEqual(github_anchor("Official & League Data"), "official--league-data")
+        self.assertEqual(
+            github_anchor("Official & League Data"), "official--league-data"
+        )
 
 
 class DocumentValidationTests(unittest.TestCase):
@@ -60,7 +74,9 @@ class DocumentValidationTests(unittest.TestCase):
 
         result = validate_document(invalid, self.root)
 
-        self.assertTrue(any("Contents entries must match" in error for error in result.errors))
+        self.assertTrue(
+            any("Contents entries must match" in error for error in result.errors)
+        )
         self.assertTrue(any("must use HTTPS" in error for error in result.errors))
         self.assertTrue(any("start uppercase" in error for error in result.errors))
         self.assertTrue(any("end with a period" in error for error in result.errors))
@@ -79,8 +95,12 @@ class DocumentValidationTests(unittest.TestCase):
 
         result = validate_document(invalid, self.root)
 
-        self.assertTrue(any("duplicate resource URL" in error for error in result.errors))
-        self.assertTrue(any("resource entry must match" in error for error in result.errors))
+        self.assertTrue(
+            any("duplicate resource URL" in error for error in result.errors)
+        )
+        self.assertTrue(
+            any("resource entry must match" in error for error in result.errors)
+        )
 
     def test_reports_missing_relative_links(self) -> None:
         invalid = VALID_README + "\n[Missing](docs/missing.md)\n"
@@ -92,11 +112,33 @@ class DocumentValidationTests(unittest.TestCase):
             result.errors,
         )
 
+    def test_reports_non_ascii_characters(self) -> None:
+        invalid = VALID_README.replace("focused", f"foc{chr(0x016B)}sed")
+
+        result = validate_document(invalid, self.root)
+
+        self.assertIn(
+            "line 3: document must use ASCII characters; found U+016B",
+            result.errors,
+        )
+
     def test_empty_document_reports_errors_instead_of_crashing(self) -> None:
         result = validate_document("", self.root)
 
         self.assertTrue(result.errors)
         self.assertEqual(result.resource_count, 0)
+
+
+class RepositoryTextContractTests(unittest.TestCase):
+    def test_publishable_text_files_are_ascii(self) -> None:
+        repository_root = Path(__file__).resolve().parents[1]
+
+        for relative_path in PUBLISHABLE_TEXT_FILES:
+            with self.subTest(path=relative_path):
+                contents = (repository_root / relative_path).read_bytes()
+                self.assertTrue(
+                    contents.isascii(), f"{relative_path} must contain only ASCII"
+                )
 
 
 if __name__ == "__main__":
