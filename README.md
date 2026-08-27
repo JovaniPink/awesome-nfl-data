@@ -29,6 +29,8 @@ League-operated sources. Use these first for official schedules, statistics, des
 - [Next Gen Stats](https://nextgenstats.nfl.com/) - Public dashboards for selected tracking-derived metrics such as completion probability, expected rushing yards, separation, and time to throw. This is not the raw tracking feed.
 - [Next Gen Stats: How It Works](https://operations.nfl.com/game-operations-logistics/technology/performance-tracking-data-next-gen-stats) - NFL Football Operations overview of the RFID tracking system, collection frequency, and metric types.
 - [NFL Big Data Bowl](https://operations.nfl.com/programs-initiatives/innovation/big-data-bowl) - Annual analytics competition using bounded releases of traditional and Next Gen Stats data; the best official entry point for public tracking-data research.
+- [NFL Draft Tracker](https://www.nfl.com/draft/tracker) - Official draft selections and prospect profiles that combine reported measurements, Next Gen Stats scores, and human analyst evaluations; keep these field types distinct. This is a public web reference, not a bulk-data license.
+- [NFL Scouting Combine](https://www.nfl.com/combine) - Official participant and prospect surface for combine measurements and workout results; public web access does not establish bulk retrieval or redistribution rights.
 - [NFL Injury Reports](https://www.nfl.com/injuries/) - Official practice participation and game-status designations while weekly reporting windows are active.
 - [NFL Transactions](https://www.nfl.com/transactions/) - Official trades, signings, reserve-list moves, waivers, and terminations.
 - [NFL Rulebook](https://operations.nfl.com/rules-officiating/2026-nfl-rulebook) - Official 2026 playing rules and definitions.
