@@ -3,9 +3,23 @@ from __future__ import annotations
 import tempfile
 import unittest
 from pathlib import Path
-from typing import Final
+from typing import Final, TypeAlias, TypedDict
 
-from scripts.validate_readme import github_anchor, validate_document
+from scripts.validate_readme import (
+    RESOURCE_ENTRY_RE,
+    github_anchor,
+    validate_document,
+)
+
+CatalogEntry: TypeAlias = tuple[str, str, str]
+
+
+class ReleaseSourceContract(TypedDict):
+    name: str
+    url: str
+    section: str
+    required_phrases: tuple[str, ...]
+    forbidden_phrases: tuple[str, ...]
 
 
 VALID_README = """# Awesome Test [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
@@ -37,6 +51,72 @@ PUBLISHABLE_TEXT_FILES: Final[tuple[str, ...]] = (
     "scripts/validate_readme.py",
     "tests/test_validate_readme.py",
 )
+
+RELEASE_SOURCE_CONTRACTS: Final[tuple[ReleaseSourceContract, ...]] = (
+    {
+        "name": "NFL Draft Tracker",
+        "url": "https://www.nfl.com/draft/tracker",
+        "section": "Official & League Data",
+        "required_phrases": (
+            "Official draft selections and prospect profiles",
+            "reported measurements",
+            "Next Gen Stats scores",
+            "human analyst evaluations",
+            "keep these field types distinct",
+            "not a bulk-data license",
+        ),
+        "forbidden_phrases": ("is a bulk-data license",),
+    },
+    {
+        "name": "NFL Scouting Combine",
+        "url": "https://www.nfl.com/combine",
+        "section": "Official & League Data",
+        "required_phrases": (
+            "Official participant and prospect surface",
+            "combine measurements and workout results",
+            "does not establish bulk retrieval or redistribution rights",
+        ),
+        "forbidden_phrases": (
+            "establishes bulk retrieval or redistribution rights",
+        ),
+    },
+)
+
+
+def _catalog_entries_by_url(text: str) -> dict[str, CatalogEntry]:
+    entries: dict[str, CatalogEntry] = {}
+    section = ""
+    for line in text.splitlines():
+        if line.startswith("## "):
+            section = line.removeprefix("## ")
+            continue
+        match = RESOURCE_ENTRY_RE.fullmatch(line)
+        if match and match.group(3):
+            entries[match.group(2)] = (match.group(1), section, match.group(3))
+    return entries
+
+
+def _release_source_contract_errors(text: str) -> tuple[str, ...]:
+    errors: list[str] = []
+    entries = _catalog_entries_by_url(text)
+    for contract in RELEASE_SOURCE_CONTRACTS:
+        url = contract["url"]
+        entry = entries.get(url)
+        if entry is None:
+            errors.append(f"missing release source URL: {url}")
+            continue
+        name, section, description = entry
+        if name != contract["name"]:
+            errors.append(f"unexpected README name for {url}: {name}")
+        if section != contract["section"]:
+            errors.append(f"unexpected README section for {url}: {section}")
+        for phrase in contract["required_phrases"]:
+            if phrase not in description:
+                errors.append(f"missing README phrase for {url}: {phrase}")
+        for phrase in contract["forbidden_phrases"]:
+            if phrase in description:
+                errors.append(f"forbidden README phrase for {url}: {phrase}")
+    return tuple(errors)
 
 
 class GithubAnchorTests(unittest.TestCase):
@@ -139,6 +219,34 @@ class RepositoryTextContractTests(unittest.TestCase):
                 self.assertTrue(
                     contents.isascii(), f"{relative_path} must contain only ASCII"
                 )
+
+
+class ReleaseSourceContractTests(unittest.TestCase):
+    def setUp(self) -> None:
+        repository_root = Path(__file__).resolve().parents[1]
+        self.readme = (repository_root / "README.md").read_text(encoding="utf-8")
+
+    def test_release_sources_match_reviewed_evidence(self) -> None:
+        self.assertEqual(_release_source_contract_errors(self.readme), ())
+
+    def test_release_source_contract_rejects_boundary_mutations(self) -> None:
+        draft_mutation = self.readme.replace(
+            "not a bulk-data license", "is a bulk-data license"
+        )
+        combine_mutation = self.readme.replace(
+            "does not establish bulk retrieval or redistribution rights",
+            "establishes bulk retrieval or redistribution rights",
+        )
+
+        draft_errors = _release_source_contract_errors(draft_mutation)
+        combine_errors = _release_source_contract_errors(combine_mutation)
+
+        self.assertTrue(
+            any("forbidden README phrase" in error for error in draft_errors)
+        )
+        self.assertTrue(
+            any("forbidden README phrase" in error for error in combine_errors)
+        )
 
 
 if __name__ == "__main__":
