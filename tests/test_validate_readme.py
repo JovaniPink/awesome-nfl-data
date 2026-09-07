@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 import tempfile
 import unittest
 from pathlib import Path
@@ -247,6 +248,211 @@ class ReleaseSourceContractTests(unittest.TestCase):
         self.assertTrue(
             any("forbidden README phrase" in error for error in combine_errors)
         )
+
+
+class LiveDataGuidanceTests(unittest.TestCase):
+    """Offline editorial contracts, not live availability or source-quality checks.
+
+    First-party evidence rechecked September 2, 2026 (a targeted agent check,
+    not a human review of the whole catalog):
+    - https://www.nfl.com/scores (including preseason week selectors)
+    - https://www.nfl.com/stats/player-stats/ (player categories; STATS navigation)
+    - https://nflfastr.com/#data-access (regular season and postseason files)
+    - https://github.com/nflverse/nfldata/blob/master/DATASETS.md#games
+      (schedule excludes preseason; the PBP release builder obtains game IDs
+      through missing_raw_pbp(), which uses load_schedules())
+    - https://github.com/nflverse/nflverse-pbp/blob/master/R/update_pbp.R
+    - https://nflfastr.com/reference/missing_raw_pbp.html
+    - https://nflreadr.nflverse.com/articles/nflverse_data_schedule.html
+      (Injury Data and nflverse Participation Data sections)
+    - https://www.nfl.com/injuries/ (weekly reporting surface)
+
+    Recheck these sources before deliberately changing the pinned guidance.
+    Whitespace may change; resource identity and factual clauses may not drift.
+    """
+
+    def setUp(self) -> None:
+        self.root = Path(__file__).resolve().parents[1]
+        self.readme = (self.root / "README.md").read_text(encoding="utf-8")
+
+    def assert_scores_statistics_contract(self, text: str) -> None:
+        entries = _catalog_entries_by_url(text)
+        for url, name, description in (
+            (
+                "https://www.nfl.com/scores",
+                "NFL Scores",
+                "Official preseason and regular-season schedules, live game status, "
+                "final scores, recaps, highlights, and replay links.",
+            ),
+            (
+                "https://www.nfl.com/stats/player-stats/",
+                "NFL Statistics",
+                "Official player leaderboards, with team statistics and standings "
+                "linked from the NFL's statistics navigation.",
+            ),
+        ):
+            self.assertEqual(
+                entries.get(url),
+                (name, "Official & League Data", description),
+                "Scores/Statistics source distinction",
+            )
+
+        rows = [
+            tuple(cell.strip() for cell in line.strip("|").split("|"))
+            for line in text.splitlines()
+            if line.startswith("|")
+        ]
+        self.assertIn(
+            (
+                "Live preseason schedules/results",
+                "NFL Scores",
+                "Licensed Sportradar or SportsDataIO feed for production use",
+            ),
+            rows,
+            "live preseason stack recommendation",
+        )
+
+    def assert_preseason_contract(self, text: str) -> None:
+        normalized = " ".join(text.split())
+        self.assertIn(
+            "For live or preseason games, begin with NFL Scores or a licensed API.",
+            normalized,
+            "live/preseason starting point",
+        )
+        self.assertIn(
+            "nflfastR's published play-by-play files contain regular-season and "
+            "postseason games, not preseason.",
+            normalized,
+            "nflfastR preseason exclusion",
+        )
+
+    def assert_injury_contract(self, text: str) -> None:
+        normalized = " ".join(text.split())
+        for clause in (
+            "Do not depend on nflverse participation or injury files for current "
+            "in-season reporting.",
+            "Participation data from 2023 onward is released only after the "
+            "postseason, and the nflverse injury source currently stops after "
+            "2024 with no replacement ETA.",
+            "Use the official NFL injury reports for current weekly designations.",
+        ):
+            self.assertIn(clause, normalized, "nflverse injury availability boundary")
+        self.assertEqual(
+            _catalog_entries_by_url(text).get("https://www.nfl.com/injuries/"),
+            (
+                "NFL Injury Reports",
+                "Official & League Data",
+                "Official practice participation and game-status designations "
+                "while weekly reporting windows are active.",
+            ),
+            "official injury reporting boundary",
+        )
+
+    def test_scores_and_statistics_have_distinct_roles(self) -> None:
+        self.assert_scores_statistics_contract(self.readme)
+
+    def test_published_pbp_excludes_preseason(self) -> None:
+        self.assert_preseason_contract(self.readme)
+
+    def test_injury_gap_and_weekly_alternative_are_explicit(self) -> None:
+        self.assert_injury_contract(self.readme)
+
+    def test_guidance_allows_prose_rewrapping(self) -> None:
+        rewrapped = self.readme.replace("play-by-play files", "play-by-play\nfiles")
+        rewrapped = rewrapped.replace("2024 with no", "2024\nwith no")
+        self.assert_preseason_contract(rewrapped)
+        self.assert_injury_contract(rewrapped)
+
+    def test_rejects_scores_statistics_mutations(self) -> None:
+        mutations = (
+            ("[NFL Scores]", "[NFL Statistics]", "source distinction"),
+            (
+                "https://www.nfl.com/scores",
+                "https://www.nfl.com/schedules",
+                "source distinction",
+            ),
+            (
+                "Official player leaderboards",
+                "Official live scores",
+                "source distinction",
+            ),
+            (
+                "Official preseason and regular-season schedules",
+                "Official regular-season schedules",
+                "source distinction",
+            ),
+            ("| NFL Scores ", "| NFL Statistics ", "stack recommendation"),
+        )
+        for old, new, failure in mutations:
+            with self.subTest(mutation=(old, new)):
+                mutated = self.readme.replace(old, new, 1)
+                self.assertNotEqual(mutated, self.readme)
+                self.assertEqual(validate_document(mutated, self.root).errors, ())
+                with self.assertRaisesRegex(AssertionError, failure):
+                    self.assert_scores_statistics_contract(mutated)
+
+    def test_rejects_preseason_guidance_mutations(self) -> None:
+        mutations = (
+            ("begin with NFL Scores", "begin with NFL Statistics", "starting point"),
+            (
+                "games, not preseason.",
+                "games, including preseason.",
+                "preseason exclusion",
+            ),
+            ("games, not preseason.", "games.", "preseason exclusion"),
+            (
+                "regular-season and postseason games",
+                "regular-season games",
+                "preseason exclusion",
+            ),
+        )
+        for old, new, failure in mutations:
+            with self.subTest(mutation=(old, new)):
+                mutated = self.readme.replace(old, new, 1)
+                self.assertNotEqual(mutated, self.readme)
+                self.assertEqual(validate_document(mutated, self.root).errors, ())
+                with self.assertRaisesRegex(AssertionError, failure):
+                    self.assert_preseason_contract(mutated)
+
+    def test_rejects_injury_guidance_mutations(self) -> None:
+        mutations = (
+            (
+                "Do not depend on nflverse",
+                "Depend on nflverse",
+                "availability boundary",
+            ),
+            ("stops after 2024", "stops after 2025", "availability boundary"),
+            (
+                "with no replacement ETA",
+                "with a replacement ETA",
+                "availability boundary",
+            ),
+            (
+                "released only after the postseason",
+                "released during the season",
+                "availability boundary",
+            ),
+            (
+                "official NFL injury reports for",
+                "nflverse injury files for",
+                "availability boundary",
+            ),
+            (
+                "while weekly reporting windows are active",
+                "throughout the year",
+                "reporting boundary",
+            ),
+        )
+        for old, new, failure in mutations:
+            with self.subTest(mutation=(old, new)):
+                # Match across prose wrapping without flattening the Markdown.
+                pattern = r"\s+".join(re.escape(word) for word in old.split())
+                self.assertEqual(len(re.findall(pattern, self.readme)), 1)
+                mutated = re.sub(pattern, new, self.readme, count=1)
+                self.assertNotEqual(mutated, self.readme)
+                self.assertEqual(validate_document(mutated, self.root).errors, ())
+                with self.assertRaisesRegex(AssertionError, failure):
+                    self.assert_injury_contract(mutated)
 
 
 if __name__ == "__main__":
