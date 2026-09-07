@@ -52,6 +52,7 @@ Programmatic and bulk access for research. Check dataset-specific licenses, upda
 - [nflreadpy](https://nflreadpy.nflverse.com/) - Current MIT-licensed Python loader for nflverse data. It returns Polars DataFrames and supports caching; its documentation says most of the first version was written by Claude, so validate outputs before production use.
 - [nflreadr](https://nflreadr.nflverse.com/) - R package for downloading play-by-play and the broader nflverse dataset catalog, with data dictionaries and update-status documentation.
 - [nflfastR](https://nflfastr.com/) - MIT-licensed R package and methodology hub for cleaning play-by-play and computing expected points and win probability fields used across nflverse.
+- [Data Vault NFL Games](https://jayjex.github.io/data-vault/datasets/nfl-games.html) - Free sample CSV/JSON of nflverse-derived game data (7,548 games, 1999-2026, 46 columns) with full CSVs queryable through an MIT-licensed MCP server.
 - [SportsDataIO NFL API](https://sportsdata.io/developers/api-documentation/nfl) - Commercial HTTP API for scores, statistics, play data, fantasy, projections, odds, news, and images; access depends on the purchased feed.
 - [Sportradar NFL API](https://developer.sportradar.com/football/docs/nfl-ig-api-basics) - Licensed B2B REST feeds for production applications that need structured schedules, rosters, statistics, and play-by-play with vendor support.
 

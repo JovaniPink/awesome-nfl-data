@@ -857,6 +857,53 @@
       },
       "editorialStatus": "published",
       "evidenceStatus": "unreviewed",
+      "id": "awesome-nfl-data:source:r-2bb43deaf81df1dc",
+      "kind": "source",
+      "legacyIds": [],
+      "limitations": [
+        "Catalog inclusion is curation, not endorsement, permission, maintenance proof, or model fitness proof.",
+        "This record does not establish a dataset vintage, retrieval snapshot, license grant, or current availability."
+      ],
+      "projectId": "awesome-nfl-data",
+      "provenance": {
+        "methodIds": [],
+        "sourceIds": []
+      },
+      "relationships": [],
+      "schemaVersion": "1.1",
+      "semantics": {
+        "domains": [
+          "sports"
+        ],
+        "entities": [],
+        "tags": [
+          "catalog-resource"
+        ],
+        "topics": [
+          "open-data-apis"
+        ]
+      },
+      "source": {
+        "accessStatus": "unknown",
+        "authorityRole": "unknown",
+        "canonicalUrl": "https://jayjex.github.io/data-vault/datasets/nfl-games.html",
+        "license": "Resource-specific terms apply; catalog inclusion grants no license.",
+        "methodologyWarnings": [
+          "Review the publisher methodology, access conditions, license, retrieval date, review date, and as-of meaning before use."
+        ],
+        "publisher": "Data Vault NFL Games"
+      },
+      "summary": "Free sample CSV/JSON of nflverse-derived game data (7,548 games, 1999-2026, 46 columns) with full CSVs queryable through an MIT-licensed MCP server.",
+      "title": "Data Vault NFL Games",
+      "visibility": "public"
+    },
+    {
+      "corrections": [],
+      "dates": {
+        "createdAt": "2026-08-30"
+      },
+      "editorialStatus": "published",
+      "evidenceStatus": "unreviewed",
       "id": "awesome-nfl-data:source:r-7da9985cae71e72d",
       "kind": "source",
       "legacyIds": [],
