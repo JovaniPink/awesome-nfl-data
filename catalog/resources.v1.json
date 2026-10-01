@@ -1229,6 +1229,53 @@
     {
       "corrections": [],
       "dates": {
+        "createdAt": "2026-10-01"
+      },
+      "editorialStatus": "published",
+      "evidenceStatus": "unreviewed",
+      "id": "awesome-nfl-data:source:r-5eb361724354ddfa",
+      "kind": "source",
+      "legacyIds": [],
+      "limitations": [
+        "Catalog inclusion is curation, not endorsement, permission, maintenance proof, or model fitness proof.",
+        "This record does not establish a dataset vintage, retrieval snapshot, license grant, or current availability."
+      ],
+      "projectId": "awesome-nfl-data",
+      "provenance": {
+        "methodIds": [],
+        "sourceIds": []
+      },
+      "relationships": [],
+      "schemaVersion": "1.1",
+      "semantics": {
+        "domains": [
+          "sports"
+        ],
+        "entities": [],
+        "tags": [
+          "catalog-resource"
+        ],
+        "topics": [
+          "analytics-charting-tracking"
+        ]
+      },
+      "source": {
+        "accessStatus": "unknown",
+        "authorityRole": "unknown",
+        "canonicalUrl": "https://www.nopunt.com/",
+        "license": "Resource-specific terms apply; catalog inclusion grants no license.",
+        "methodologyWarnings": [
+          "Review the publisher methodology, access conditions, license, retrieval date, review date, and as-of meaning before use."
+        ],
+        "publisher": "NoPunt"
+      },
+      "summary": "Model estimates of win probability, margin, and confidence for regular-season NFL games, with a public JSON API. The publisher distinguishes retrospective backtests from timestamped live picks; performance claims are not independently verified here, and betting and fantasy tools require a subscription.",
+      "title": "NoPunt",
+      "visibility": "public"
+    },
+    {
+      "corrections": [],
+      "dates": {
         "createdAt": "2026-08-30"
       },
       "editorialStatus": "published",

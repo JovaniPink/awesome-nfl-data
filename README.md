@@ -76,6 +76,7 @@ These sources add models, human classifications, grades, or tracking-derived fie
 - [Sports Info Solutions Football](https://www.sportsinfosolutions.com/football/) - Professional NFL and college charting, advanced metrics, and commercial data feeds, including Total Points; its legacy DataHub also retains a free public tier.
 - [RBSDM](https://rbsdm.com/) - Public EPA-based team and player dashboards built from play-by-play data.
 - [nfelo](https://www.nfeloapp.com/) - Elo ratings, team tiers, quarterback adjustments, game projections, and model-focused NFL analysis.
+- [NoPunt](https://www.nopunt.com/) - Model estimates of win probability, margin, and confidence for regular-season NFL games, with a public JSON API. The publisher distinguishes retrospective backtests from timestamped live picks; performance claims are not independently verified here, and betting and fantasy tools require a subscription.
 - [ESPN Analytics](https://www.espn.com/analytics/) - Public analytical models and explainers, including blocking and pass-rush win-rate work; availability varies by season and feature.
 - [Unexpected Points](https://www.unexpectedpoints.com/) - Current model-driven articles, power rankings, and advanced game reviews; some posts require a subscription, and the podcast feed stopped updating in December 2024.
 
