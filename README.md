@@ -61,6 +61,7 @@ Programmatic and bulk access for research. Check dataset-specific licenses, upda
 - [SportsDataIO NFL API](https://sportsdata.io/developers/api-documentation/nfl) - Commercial HTTP API for scores, statistics, play data, fantasy, projections, odds, news, and images; access depends on the purchased feed.
 - [Sportradar NFL API](https://developer.sportradar.com/football/docs/nfl-ig-api-basics) - Licensed B2B REST feeds for production applications that need structured schedules, rosters, statistics, and play-by-play with vendor support.
 - [EndzoneAPI](https://endzoneapi.com/) - Unofficial paid HTTP and MCP API with a limited free credit allowance for NFL play-by-play, model metrics, statistics, injuries, depth charts, snap counts, and bookmaker odds; its terms restrict standalone data redistribution and raw odds feeds, while separately open-licensed upstream data retains its own terms. Coverage and accuracy beyond the public documentation have not been independently qualified.
+- [NFL Weekly Stats & Injuries (Apify Actor)](https://apify.com/pennydata/nfl-weekly-stats-injuries) - Pay-per-use Apify Actor that returns weekly player stats and injury report rows as JSON or CSV by reading the open nflverse-data releases (CC BY 4.0); a convenience wrapper with no extra data of its own, so check nflverse freshness notes and retrieval dates.
 
 For live or preseason games, begin with NFL Scores or a licensed API. nflfastR's published
 play-by-play files contain regular-season and postseason games, not preseason. During the season,
