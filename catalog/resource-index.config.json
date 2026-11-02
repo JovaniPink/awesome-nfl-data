@@ -5,7 +5,7 @@
   ],
   "projectionDate": "2026-08-30",
   "creationDates": {
-    "https://apify.com/publicrecords/sports-odds-api": "2026-10-28",
+    "https://apify.com/pennydata/nfl-weekly-stats-injuries": "2026-10-23",
     "https://developer.sportradar.com/football/docs/nfl-ig-api-basics": "2026-08-30",
     "https://duckdb.org/": "2026-08-30",
     "https://endzoneapi.com/": "2026-10-14",
@@ -67,6 +67,7 @@
     "https://www.youtube.com/@TAFootballShow": "2026-08-30",
     "https://www.youtube.com/@TheQBSchool": "2026-08-30",
     "https://www.youtube.com/@ThinkingFootball": "2026-08-30",
-    "https://www.youtube.com/@kurtwarnerqbc": "2026-08-30"
+    "https://www.youtube.com/@kurtwarnerqbc": "2026-08-30",
+    "https://apify.com/publicrecords/sports-odds-api": "2026-10-28"
   }
 }
