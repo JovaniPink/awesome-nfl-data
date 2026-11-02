@@ -5,6 +5,7 @@
   ],
   "projectionDate": "2026-08-30",
   "creationDates": {
+    "https://apify.com/pennydata/nfl-weekly-stats-injuries": "2026-10-23",
     "https://developer.sportradar.com/football/docs/nfl-ig-api-basics": "2026-08-30",
     "https://duckdb.org/": "2026-08-30",
     "https://endzoneapi.com/": "2026-10-14",

@@ -994,6 +994,53 @@
     {
       "corrections": [],
       "dates": {
+        "createdAt": "2026-10-23"
+      },
+      "editorialStatus": "published",
+      "evidenceStatus": "unreviewed",
+      "id": "awesome-nfl-data:source:r-3b7e9f3bfdfca49e",
+      "kind": "source",
+      "legacyIds": [],
+      "limitations": [
+        "Catalog inclusion is curation, not endorsement, permission, maintenance proof, or model fitness proof.",
+        "This record does not establish a dataset vintage, retrieval snapshot, license grant, or current availability."
+      ],
+      "projectId": "awesome-nfl-data",
+      "provenance": {
+        "methodIds": [],
+        "sourceIds": []
+      },
+      "relationships": [],
+      "schemaVersion": "1.1",
+      "semantics": {
+        "domains": [
+          "sports"
+        ],
+        "entities": [],
+        "tags": [
+          "catalog-resource"
+        ],
+        "topics": [
+          "open-data-apis"
+        ]
+      },
+      "source": {
+        "accessStatus": "unknown",
+        "authorityRole": "unknown",
+        "canonicalUrl": "https://apify.com/pennydata/nfl-weekly-stats-injuries",
+        "license": "Resource-specific terms apply; catalog inclusion grants no license.",
+        "methodologyWarnings": [
+          "Review the publisher methodology, access conditions, license, retrieval date, review date, and as-of meaning before use."
+        ],
+        "publisher": "NFL Weekly Stats & Injuries (Apify Actor)"
+      },
+      "summary": "Pay-per-use Apify Actor that returns weekly player stats and injury report rows as JSON or CSV by reading the open nflverse-data releases (CC BY 4.0); a convenience wrapper with no extra data of its own, so check nflverse freshness notes and retrieval dates.",
+      "title": "NFL Weekly Stats & Injuries (Apify Actor)",
+      "visibility": "public"
+    },
+    {
+      "corrections": [],
+      "dates": {
         "createdAt": "2026-08-30"
       },
       "editorialStatus": "published",
