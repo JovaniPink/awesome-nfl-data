@@ -1981,6 +1981,53 @@
     {
       "corrections": [],
       "dates": {
+        "createdAt": "2026-11-23"
+      },
+      "editorialStatus": "published",
+      "evidenceStatus": "unreviewed",
+      "id": "awesome-nfl-data:source:r-6aa54b814247881e",
+      "kind": "source",
+      "legacyIds": [],
+      "limitations": [
+        "Catalog inclusion is curation, not endorsement, permission, maintenance proof, or model fitness proof.",
+        "This record does not establish a dataset vintage, retrieval snapshot, license grant, or current availability."
+      ],
+      "projectId": "awesome-nfl-data",
+      "provenance": {
+        "methodIds": [],
+        "sourceIds": []
+      },
+      "relationships": [],
+      "schemaVersion": "1.1",
+      "semantics": {
+        "domains": [
+          "sports"
+        ],
+        "entities": [],
+        "tags": [
+          "catalog-resource"
+        ],
+        "topics": [
+          "data-analysis-libraries-tools"
+        ]
+      },
+      "source": {
+        "accessStatus": "unknown",
+        "authorityRole": "unknown",
+        "canonicalUrl": "https://github.com/sports-data-hq/big-data-bowl-2027-starter",
+        "license": "Resource-specific terms apply; catalog inclusion grants no license.",
+        "methodologyWarnings": [
+          "Review the publisher methodology, access conditions, license, retrieval date, review date, and as-of meaning before use."
+        ],
+        "publisher": "Big Data Bowl 2027 starter"
+      },
+      "summary": "MIT-licensed Python script that pulls regular-season Next Gen Stats season aggregates and season totals from EndzoneAPI with a free key and matches them to Combine players by name and position group; it contains no competition data, and offensive linemen are not covered because they have no box-score stats.",
+      "title": "Big Data Bowl 2027 starter",
+      "visibility": "public"
+    },
+    {
+      "corrections": [],
+      "dates": {
         "createdAt": "2026-08-30"
       },
       "editorialStatus": "published",
