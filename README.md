@@ -114,6 +114,7 @@ another.
 - [nfl4th](https://www.nfl4th.com/) - Fourth-down decision modeling and analysis in R.
 - [Polars](https://pola.rs/) - Fast DataFrame engine used by nflreadpy.
 - [DuckDB](https://duckdb.org/) - Embedded analytical database well suited to querying Parquet and joining NFL datasets locally.
+- [Big Data Bowl 2027 starter](https://github.com/sports-data-hq/big-data-bowl-2027-starter) - MIT-licensed Python script that pulls regular-season Next Gen Stats season aggregates and season totals from EndzoneAPI with a free key and matches them to Combine players by name and position group; it contains no competition data, and offensive linemen are not covered because they have no box-score stats.
 
 ## YouTube & Film Study
 
