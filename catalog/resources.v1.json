@@ -1323,6 +1323,100 @@
     {
       "corrections": [],
       "dates": {
+        "createdAt": "2026-11-25"
+      },
+      "editorialStatus": "published",
+      "evidenceStatus": "unreviewed",
+      "id": "awesome-nfl-data:source:r-04c6913cbb38d83b",
+      "kind": "source",
+      "legacyIds": [],
+      "limitations": [
+        "Catalog inclusion is curation, not endorsement, permission, maintenance proof, or model fitness proof.",
+        "This record does not establish a dataset vintage, retrieval snapshot, license grant, or current availability."
+      ],
+      "projectId": "awesome-nfl-data",
+      "provenance": {
+        "methodIds": [],
+        "sourceIds": []
+      },
+      "relationships": [],
+      "schemaVersion": "1.1",
+      "semantics": {
+        "domains": [
+          "sports"
+        ],
+        "entities": [],
+        "tags": [
+          "catalog-resource"
+        ],
+        "topics": [
+          "analytics-charting-tracking"
+        ]
+      },
+      "source": {
+        "accessStatus": "unknown",
+        "authorityRole": "unknown",
+        "canonicalUrl": "https://keelstats.com/nfl",
+        "license": "Resource-specific terms apply; catalog inclusion grants no license.",
+        "methodologyWarnings": [
+          "Review the publisher methodology, access conditions, license, retrieval date, review date, and as-of meaning before use."
+        ],
+        "publisher": "Keel Stats"
+      },
+      "summary": "NFL statistical views alongside Keel's modeled EPA, rankings and projections; public pages are free, documented MCP access includes limited account-free coverage, free accounts expand history, and some tools require Pro. Credited editorial quotation of its own numbers is permitted; raw exports and bulk reuse are restricted, and MCP behavior has not been independently tested here.",
+      "title": "Keel Stats",
+      "visibility": "public"
+    },
+    {
+      "corrections": [],
+      "dates": {
+        "createdAt": "2026-11-25"
+      },
+      "editorialStatus": "published",
+      "evidenceStatus": "unreviewed",
+      "id": "awesome-nfl-data:source:r-84a00cb58f82d747",
+      "kind": "source",
+      "legacyIds": [],
+      "limitations": [
+        "Catalog inclusion is curation, not endorsement, permission, maintenance proof, or model fitness proof.",
+        "This record does not establish a dataset vintage, retrieval snapshot, license grant, or current availability."
+      ],
+      "projectId": "awesome-nfl-data",
+      "provenance": {
+        "methodIds": [],
+        "sourceIds": []
+      },
+      "relationships": [],
+      "schemaVersion": "1.1",
+      "semantics": {
+        "domains": [
+          "sports"
+        ],
+        "entities": [],
+        "tags": [
+          "catalog-resource"
+        ],
+        "topics": [
+          "analytics-charting-tracking"
+        ]
+      },
+      "source": {
+        "accessStatus": "unknown",
+        "authorityRole": "unknown",
+        "canonicalUrl": "https://statsnext.com/nfl/defense-vs-position",
+        "license": "Resource-specific terms apply; catalog inclusion grants no license.",
+        "methodologyWarnings": [
+          "Review the publisher methodology, access conditions, license, retrieval date, review date, and as-of meaning before use."
+        ],
+        "publisher": "StatsNext NFL defense vs position"
+      },
+      "summary": "Public per-game box-score allowances to listed quarterbacks, running backs, wide receivers and tight ends, with sample dates, counts and recent-game comparisons; small samples, position assignments and lack of opponent adjustment limit interpretation. Free reading does not grant API, bulk-download or redistribution rights.",
+      "title": "StatsNext NFL defense vs position",
+      "visibility": "public"
+    },
+    {
+      "corrections": [],
+      "dates": {
         "createdAt": "2026-08-30"
       },
       "editorialStatus": "published",
